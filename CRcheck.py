@@ -90,31 +90,45 @@ while True:
     print('\n names in '+str(secondsheet)+' and not in '+str(firstsheet)+' are given below:')
     print(rightDiff)
 
-# write out the matched, left difference and right difference to 3 excel sheets
-#     
+
+#   create and setup worksheets with headings for results  
     workbook = xlsxwriter.Workbook('Result.xlsx')
     worksheet1 = workbook.add_worksheet()
+    worksheet1.write(0, 0, 'row number')
+    worksheet1.write(0, 1, 'name')
+    worksheet1.write(0, 2, 'salary')
+
     worksheet2 = workbook.add_worksheet()
+    worksheet2.write(0, 0, 'row number')
+    worksheet2.write(0, 1, 'name')
+    worksheet3.write(0, 2, 'salary')
+
     worksheet3 = workbook.add_worksheet()
+    worksheet3.write(0, 0, 'row number')
+    worksheet3.write(0, 1, 'name')
+    worksheet3.write(0, 2, 'salary')
     
-    row = 0
+    # write out the matched, left difference and right difference to 3 excel sheets
+
+    row = 1
     col = 0
     
     for key in leftDiff.keys():
-        row +=1
+        
         worksheet1.write(row,col,key)
         worksheet1.write(row,col+1,leftDiff[key])
-        worksheet1.write(row, col+2, ws1.iloc[key, 'salary'])
+        worksheet1.write(row, col+2, ws1.loc[key, 'salary'])
         row += 1
     
     
-    row = 0
+    row = 1
     col = 0
     
     for key in rightDiff.keys():
-        row +=1
+      
         worksheet2.write(row,col,key)
         worksheet2.write(row,col+1,rightDiff[key])
+        worksheet2.write(row, col+2, ws2.loc[key, 'salary'])
         row += 1
             
     row = 0
@@ -124,7 +138,7 @@ while True:
         row +=1
         worksheet3.write(row,col,key)
         worksheet3.write(row,col+1,exactmatch1[key])
-        worksheet1.write(row, col+2, ws1.iloc[key, 'salary'])
-        row += 1        
+        worksheet3.write(row, col+2, ws1.loc[key, 'salary'])
+            
     workbook.close() 
 
