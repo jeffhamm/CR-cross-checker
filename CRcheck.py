@@ -131,7 +131,7 @@ while True:
         worksheet2.write(row, col+2, ws2.loc[key, 'salary'])
         row += 1
             
-    row = 0
+    row = 1
     col = 0
     
     for key in exactmatch1.keys():
