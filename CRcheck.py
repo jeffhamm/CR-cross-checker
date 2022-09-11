@@ -104,6 +104,7 @@ while True:
         row +=1
         worksheet1.write(row,col,key)
         worksheet1.write(row,col+1,leftDiff[key])
+        worksheet1.write(row, col+2, ws1.iloc[key, 'salary'])
         row += 1
     
     
@@ -123,6 +124,7 @@ while True:
         row +=1
         worksheet3.write(row,col,key)
         worksheet3.write(row,col+1,exactmatch1[key])
+        worksheet1.write(row, col+2, ws1.iloc[key, 'salary'])
         row += 1        
     workbook.close() 
 
