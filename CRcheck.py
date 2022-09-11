@@ -135,10 +135,11 @@ while True:
     col = 0
     
     for key in exactmatch1.keys():
-        row +=1
+       
         worksheet3.write(row,col,key)
         worksheet3.write(row,col+1,exactmatch1[key])
         worksheet3.write(row, col+2, ws1.loc[key, 'salary'])
-            
+        row += 1
+        
     workbook.close() 
 
