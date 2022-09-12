@@ -27,7 +27,9 @@ while True:
 
     wb1 =pd.read_excel(file, sheet_name = [str(firstsheet),str(secondsheet)],header = 0)
     ws1=wb1[firstsheet].loc[:,('ssno','name','salary')]
+    
     ws1[searchcolumn] = ws1.apply(lambda x: str.lower(x[searchcolumn]), axis = 1)
+
     ws1[searchcolumn] = ws1.apply(lambda x: str.strip(x[searchcolumn]), axis = 1)
 
     ws2=wb1[secondsheet].loc[:,('ssno','name','salary')]
@@ -51,7 +53,8 @@ while True:
 
     Allnames1  = characterCounter(ws1)
     Allnames2 = characterCounter(ws2)
- 
+
+     
  # Do one to many matching from sheet1 to sheet2 and vice versa and look for set difference 
     exactmatch1 = {}
     exactmatch2 = {}
@@ -59,7 +62,7 @@ while True:
         for k,name2 in Allnames2.items():
             if fuzz.token_sort_ratio(name1,name2)>=int(accuracy):
        
-                exactmatch1.update({j:name1})
+                exactmatch1.update({j+1:name1})
            
     leftDiff ={}
 
@@ -101,7 +104,7 @@ while True:
     worksheet2 = workbook.add_worksheet()
     worksheet2.write(0, 0, 'row number')
     worksheet2.write(0, 1, 'name')
-    worksheet3.write(0, 2, 'salary')
+    worksheet2.write(0, 2, 'salary')
 
     worksheet3 = workbook.add_worksheet()
     worksheet3.write(0, 0, 'row number')
@@ -109,7 +112,8 @@ while True:
     worksheet3.write(0, 2, 'salary')
     
     # write out the matched, left difference and right difference to 3 excel sheets
-
+    
+    print(exactmatch1)
     row = 1
     col = 0
     
@@ -117,7 +121,7 @@ while True:
         
         worksheet1.write(row,col,key)
         worksheet1.write(row,col+1,leftDiff[key])
-        worksheet1.write(row, col+2, ws1.loc[key, 'salary'])
+        worksheet1.write(row, col+2, ws1.at[key-1, 'salary']) 
         row += 1
     
     
@@ -128,7 +132,7 @@ while True:
       
         worksheet2.write(row,col,key)
         worksheet2.write(row,col+1,rightDiff[key])
-        worksheet2.write(row, col+2, ws2.loc[key, 'salary'])
+        worksheet2.write(row, col+2, ws2.at[key-1, 'salary'])
         row += 1
             
     row = 1
@@ -138,7 +142,7 @@ while True:
        
         worksheet3.write(row,col,key)
         worksheet3.write(row,col+1,exactmatch1[key])
-        worksheet3.write(row, col+2, ws1.loc[key, 'salary'])
+        worksheet3.write(row, col+2, ws1.at[key-1, 'salary'])
         row += 1
         
     workbook.close() 
